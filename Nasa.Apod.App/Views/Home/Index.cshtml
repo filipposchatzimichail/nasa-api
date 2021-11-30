@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "NASA Astronomy Picture of the Day";
+}
+
+@model Nasa.Apod.DataAccess.Data.Apod;
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        <h1>@Model.Title</h1>   
+        <h3>@Model.Date</h3>
+        <img src="@Model.Url" />    
+        <p>@Model.Explanation</p>
+        </div>
+    </div>
+</div>
+
