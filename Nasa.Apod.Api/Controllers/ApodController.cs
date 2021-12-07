@@ -23,17 +23,18 @@ namespace Nasa.Apod.Api.Controllers
         [HttpGet]
         public async Task<string> GetApodAsync()
         {
-
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
 
-            var response = await httpClient.GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}");
+            var response = await httpClient
+                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}");
             response.EnsureSuccessStatusCode();
                         
             var result = await response.Content.ReadAsStringAsync();
 
             return result;
         }
+
         [HttpGet]
         [Route("date/{date}")]
         public async Task<string> GetApodByDateAsync(string date)
@@ -41,13 +42,13 @@ namespace Nasa.Apod.Api.Controllers
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
 
-            var response = await httpClient.GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}&date={date}");
+            var response = await httpClient
+                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}&date={date}");
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadAsStringAsync();
 
             return result;
         }
-
     }
 }

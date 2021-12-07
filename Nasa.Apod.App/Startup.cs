@@ -29,6 +29,7 @@ namespace Nasa.Apod.App
             services.AddHttpClient();
             services.AddHttpContextAccessor();
             services.AddSingleton<IApodService, ApodService>();            
+            services.AddSingleton<IMarsRoverPhotosService, MarsRoverPhotosService>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

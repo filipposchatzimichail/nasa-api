@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nasa.Apod.App.Models;
 using Nasa.Apod.Business.Interfaces;
+using Nasa.Apod.DataAccess.Enums;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -9,10 +11,14 @@ namespace Nasa.Apod.App.Controllers
     public class HomeController : Controller
     {
         private readonly IApodService _apodService;
+        private readonly IMarsRoverPhotosService _marsRoverPhotosService;
 
-        public HomeController(IApodService apodService)
+        public HomeController(
+            IApodService apodService,
+            IMarsRoverPhotosService marsRoverPhotosService)
         {
             _apodService = apodService;
+            _marsRoverPhotosService = marsRoverPhotosService;
         }
 
         public async Task<IActionResult> Index()
@@ -26,6 +32,14 @@ namespace Nasa.Apod.App.Controllers
         public async Task<IActionResult> Index(string date)
         {
             var result = await _apodService.GetApodByDateAsync(date);
+
+            return View(result);
+        }
+
+        public async Task<IActionResult> RoverPhoto()
+        {
+            var result = await _marsRoverPhotosService
+                .GetMarsRoverPhotoAsync(MarsRover.Curiosity, DateTime.Parse("2015-06-03"), null);
 
             return View(result);
         }
