@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Nasa.Apod.DataAccess.Data.MarsRoverPhoto>;
+
+@{
+    ViewData["Title"] = "RoverPhoto";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col">
+                @Html.DropDownList("rovers", new SelectList(ViewBag.Rovers, "Value", "Text"), "Select a rover", new { @class="form-control" })
+                @Html.ValidationMessage("rovers")
+            </div>
+            <div class="col">
+                @Html.DropDownList("cameras", new SelectList(ViewBag.RoverCameras, "Value", "Text"), "Select a camera",  new { @class="form-control" })
+                @Html.ValidationMessage("cameras")
+            </div>
+            <div class="col">
+                @Html.Editor("date", new { htmlAttributes = new { @class="form-control" } })
+                @Html.ValidationMessage("date")
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    }
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        <h1>@Model.First().Rover.Name</h1>
+        <h3>Launch Date: @Model.First().Rover.LaunchDate.ToString("dd-MM-yyyy")</h3>
+        <h3>Landing Date: @Model.First().Rover.LandingDate.ToString("dd-MM-yyyy")</h3>
+        @foreach (var photo in Model)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Martian Day: @photo.MartianDay - Earth Date: @photo.EarthDate.ToString("dd-MM-yyyy")</h3>
+                    <img src="@photo.Url" />
+                    <p>This photo was taken using the on board camera @photo.Camera.FullName (@photo.Camera.Name)</p>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+</div>
+
+
+
