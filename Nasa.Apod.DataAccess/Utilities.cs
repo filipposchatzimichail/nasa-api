@@ -17,9 +17,9 @@ namespace Nasa.Apod.DataAccess
         {
             var photos = JObject.Parse(json).SelectToken("photos").ToString();
 
-            var what = JsonConvert.DeserializeObject<List<MarsRoverPhotoData>>(photos);
+            var marsRoverPhotos = JsonConvert.DeserializeObject<List<MarsRoverPhotoData>>(photos);
 
-            return what;
+            return marsRoverPhotos;
         }
     }
 }
