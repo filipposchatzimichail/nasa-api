@@ -37,7 +37,10 @@ namespace Nasa.Apod.App.Controllers
             }
 
             var result = await _marsRoverPhotosService
-                .GetMarsRoverPhotoAsync(MarsRover.Curiosity, DateTime.Parse("2015-06-03"), null);
+                .GetMarsRoverPhotoAsync(
+                    (MarsRover)marsRoverPhotoDto.Rover, 
+                    (DateTime)marsRoverPhotoDto.EarthDate, 
+                    marsRoverPhotoDto.Camera);
 
             return View(result);
         }
