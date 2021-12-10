@@ -29,7 +29,15 @@ $("#Rover").change(function () {
 
     let roverCameras = camerasPerRover[roverText];
 
-    $.each($("#Camera option"), function (i, option) {
+    //$.each($("#Camera option"), function (i, option) {
+    //    if (!option.value) {
+    //        return;
+    //    }
+
+    //    option.hidden = roverCameras.indexOf(option.text) < 0;
+    //});
+
+    $("#Camera option").each(function (i, option) {
         if (!option.value) {
             return;
         }
@@ -37,3 +45,5 @@ $("#Rover").change(function () {
         option.hidden = roverCameras.indexOf(option.text) < 0;
     });
 })
+
+$('#EarthDate').datepicker();
