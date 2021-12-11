@@ -36,7 +36,7 @@ namespace Nasa.Apod.Business.Services
 
             if (camera != null)
             {
-                url += $"camera={camera}";
+                url += $"&camera={camera}";
             }
 
             var response = await httpClient.GetAsync(url);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,11 @@ namespace Nasa.Apod.DataAccess.Data
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        
+        [JsonProperty("rover_id")]
         public int RoverId { get; set; }
+
+        [JsonProperty("full_name")]
         public string FullName { get; set; }
     }
 }
