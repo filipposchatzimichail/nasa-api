@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Nasa.Apod.DataAccess.Data.MarsRoverPhoto>;
+
+@{
+    ViewData["Title"] = "Mars Rover Photo";
+}
+
+<div class="container">
+    <div class="card mb-5">
+        <div class="card-header">Mars Rover Photos API <i id="marsRoverInfo" class="fa fa-info-circle fa-pull-right"  data-toggle="popover"></i></div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col">
+                        @Html.DropDownList("Rover", new SelectList(ViewBag.Rovers, "Value", "Text"), "Select a rover", new { @class="form-control" })
+                        @Html.ValidationMessage("Rover", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.DropDownList("Camera", new SelectList(ViewBag.RoverCameras, "Value", "Text"), "Select a camera",  new { @class="form-control" })
+                        @Html.ValidationMessage("Camera", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.Editor("EarthDate", new { htmlAttributes = new { @class="form-control", placeholder = "Earth Date", autocomplete="off" } })
+                        @Html.ValidationMessage("EarthDate", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+    @if (Model != null)
+    {
+        @if (Model.Count() > 0)
+        {
+            <div class="card mb-5">
+                <div class="card-header text-white bg-info">Info for Rover: @Model.First().Rover.Name</div>
+                <div class="card-body">
+                    <p>Launch Date: @Model.First().Rover.LaunchDate.ToString("dd-MM-yyyy")</p>
+                    <p>Landing Date: @Model.First().Rover.LandingDate.ToString("dd-MM-yyyy")</p>
+                    <p>Martian Day: @Model.First().MartianDay - Earth Date: @Model.First().EarthDate.ToString("dd-MM-yyyy")</p>
+                </div>
+            </div>
+
+            <div class="gallery"> 
+                @foreach (var photo in Model)
+                {
+                    <a href="@photo.Url" class="big" rel="@photo.Id">
+                        <img src="@photo.Url" alt="" title="This photo was taken using the on board camera @photo.Camera.FullName (@photo.Camera.Name)" width="100" height="100">
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-primary" role="alert">
+                <p>No results for this Rover/Camera/Date!!</p>
+            </div>
+        }
+    }
+</div>
+
+@section scripts {
+    <script src="~/js/marsRoverPhoto.js"></script>
+}

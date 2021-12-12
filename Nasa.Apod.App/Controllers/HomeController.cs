@@ -9,7 +9,6 @@ namespace Nasa.Apod.App.Controllers
     public class HomeController : Controller
     {
         private readonly IApodService _apodService;
-
         public HomeController(IApodService apodService)
         {
             _apodService = apodService;
