@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nasa.Apod.Business\Nasa.Apod.Business.csproj" />
     <ProjectReference Include="..\Nasa.Apod.DataAccess\Nasa.Apod.DataAccess.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Nasa.Apod.Business.Interfaces;
 using Nasa.Apod.DataAccess;
 using Nasa.Apod.DataAccess.Data;
@@ -14,25 +15,29 @@ namespace Nasa.Apod.Business.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
         public MarsRoverPhotosService(
             IHttpClientFactory httpClientFactory, 
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
 
-        public async Task<List<MarsRoverPhoto>> GetMarsRoverPhotoAsync(
-            MarsRover rover, 
+        public async Task<List<MarsRoverPhoto>> GetMarsRoverPhotosAsync(
+            MarsRover rover,
             DateTime earthTime,
             MarsRoverCamera? camera = null)
         {
             var httpClient = _httpClientFactory.CreateClient();
+            httpClient.BaseAddress =
+                new Uri(_configuration.GetSection("MarsRoverPhotos:BaseUrl").Value);
 
-            var request = _httpContextAccessor.HttpContext.Request;
-            var url = $"{request.Scheme}://{request.Host}/api/" +
-                $"mars-rover-photo?rover={rover}&date={earthTime:yyyy-MM-dd}";
+            var url = $"{rover}/photos?earth_date={earthTime:yyyy-MM-dd}&" +
+                $"api_key={_configuration.GetSection("MarsRoverPhotos:ApiKey").Value}";
 
             if (camera != null)
             {
@@ -42,9 +47,9 @@ namespace Nasa.Apod.Business.Services
             var response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
+            var apiResult = await response.Content.ReadAsStringAsync();
 
-            var result = Utilities.GetMarsRoverPhotoFromJson(json);
+            var result = Utilities.GetMarsRoverPhotoFromJson(apiResult);
 
             return result;
         }

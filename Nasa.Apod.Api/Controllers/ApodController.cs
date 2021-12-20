@@ -1,9 +1,7 @@
-﻿using ApodData = Nasa.Apod.DataAccess.Data.Apod;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Net.Http;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using Nasa.Apod.Business.Interfaces;
+using Newtonsoft.Json;
 
 namespace Nasa.Apod.Api.Controllers
 {
@@ -11,44 +9,26 @@ namespace Nasa.Apod.Api.Controllers
     [Route("api/[controller]")]
     public class ApodController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IConfiguration _configuration;
+        private readonly IApodService _apodSvc;
 
-        public ApodController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public ApodController(IApodService apodSvc)
         {
-            _httpClientFactory = httpClientFactory;
-            _configuration = configuration;
+            _apodSvc = apodSvc;
         }
 
         [HttpGet]
         public async Task<string> GetApodAsync()
         {
-            var httpClient = _httpClientFactory.CreateClient();
-            httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
-
-            var response = await httpClient
-                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}");
-            response.EnsureSuccessStatusCode();
-                        
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
+            return JsonConvert.SerializeObject(
+                await _apodSvc.GetApodAsync());
         }
 
         [HttpGet]
         [Route("date/{date}")]
         public async Task<string> GetApodByDateAsync(string date)
         {
-            var httpClient = _httpClientFactory.CreateClient();
-            httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
-
-            var response = await httpClient
-                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}&date={date}");
-            response.EnsureSuccessStatusCode();
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
+            return JsonConvert.SerializeObject(
+                await _apodSvc.GetApodByDateAsync(date));
         }
     }
 }

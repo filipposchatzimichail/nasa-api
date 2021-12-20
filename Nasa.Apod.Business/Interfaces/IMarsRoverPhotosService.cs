@@ -8,7 +8,9 @@ namespace Nasa.Apod.Business.Interfaces
 {
     public interface IMarsRoverPhotosService
     {
-        Task<List<MarsRoverPhoto>> GetMarsRoverPhotoAsync(
-            MarsRover rover, DateTime earthTime, MarsRoverCamera? camera);
+        Task<List<MarsRoverPhoto>> GetMarsRoverPhotosAsync(
+            MarsRover rover,
+            DateTime earthTime,
+            MarsRoverCamera? camera = null);
     }
 }

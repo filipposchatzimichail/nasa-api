@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nasa.Apod.Api\Nasa.Apod.Api.csproj" />
     <ProjectReference Include="..\Nasa.Apod.Business\Nasa.Apod.Business.csproj" />
   </ItemGroup>
 
