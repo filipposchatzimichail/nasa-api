@@ -21,12 +21,11 @@ namespace Nasa.Apod.App.Controllers
             return View(result);
         }
 
-        [Route("date/{date}")]
-        public async Task<IActionResult> Index(string date)
+        public async Task<IActionResult> GetApodByDate(string date)
         {
             var result = await _apodService.GetApodByDateAsync(date);
 
-            return View(result);
+            return View("Index", result);
         }
 
         public IActionResult Privacy()
