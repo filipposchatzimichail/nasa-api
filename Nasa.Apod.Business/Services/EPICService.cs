@@ -38,9 +38,6 @@ namespace Nasa.Apod.Business.Services
 
             var epicPhotos = Utilities.GetEpicImagesFromJson(apiResult);
 
-            //epicPhotos.ForEach(async epicImage => 
-            //    epicImage.ImageData = await GetEPICImageData(epicImage));
-
             foreach (var photo in epicPhotos)
             {
                 photo.ImageData = await GetEPICImageData(photo);
@@ -56,7 +53,7 @@ namespace Nasa.Apod.Business.Services
                 new Uri(_configuration.GetSection("EPIC:ImageDataUrl").Value);
 
             var url = $"natural/{epicImage.Date.Year}/{epicImage.Date:MM}/" +
-                $"{epicImage.Date.Day}/png/{epicImage.Name}.png?" +
+                $"{epicImage.Date.Day}/jpg/{epicImage.Name}.jpg?" +
                 $"api_key={_configuration.GetSection("EPIC:ApiKey").Value}";
 
             var response = await httpClient.GetAsync(url);

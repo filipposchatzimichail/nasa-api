@@ -29,18 +29,13 @@
         {
             @foreach (var photo in Model)
             {
-                <div class="card mb-5">
+                <div class="card mt-5">
                     <div class="card-header text-white bg-info">Info for Image: @photo.Name</div>
                     <div class="card-body">
                         <p>Taken At: @photo.Date.ToString("dd-MM-yyyy HH:mm:ss")</p>
                     </div>
                 </div>
-
-                <div class="gallery"> 
-                    <a href="@photo.ImageData" class="big" rel="@photo.Id">
-                        <img src="@photo.ImageData" alt="" title="@photo.Caption" width="100" height="100">
-                    </a>
-                </div>
+                <img src="data:image/jpeg;base64,@photo.ImageData" alt="" title="@photo.Caption">
             }
         }
         else
@@ -51,3 +46,7 @@
         }
     }
 </div>
+
+@section scripts {
+    <script src="~/js/epicImage.js"></script>
+}

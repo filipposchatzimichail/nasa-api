@@ -34,7 +34,6 @@ namespace Nasa.Apod.DataAccess.Data.EPIC
 
         public Coords Coords { get; set; }
 
-        [JsonIgnore]
         public string ImageData { get; set; }
     }
 }
