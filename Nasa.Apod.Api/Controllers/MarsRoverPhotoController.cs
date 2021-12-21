@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Nasa.Apod.Business.Interfaces;
+using Nasa.Apod.DataAccess.Enums;
+using Newtonsoft.Json;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nasa.Apod.Api.Controllers
@@ -10,47 +11,35 @@ namespace Nasa.Apod.Api.Controllers
     [Route("api/mars-rover-photo")]
     public class MarsRoverPhotoController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IConfiguration _configuration;
+        private readonly IMarsRoverPhotosService _marsRoverPhotosSvc;
 
         public MarsRoverPhotoController(
-            IHttpClientFactory httpClientFactory, 
-            IConfiguration configuration)
+            IMarsRoverPhotosService marsRoverPhotosSvc)
         {
-            _httpClientFactory = httpClientFactory;
-            _configuration = configuration;
+            _marsRoverPhotosSvc = marsRoverPhotosSvc;
         }
 
         [HttpGet]
-        public async Task<string> GetMarsRoverPhotoAsync(
-            [FromQuery] string rover, 
-            string date, 
+        public async Task<string> GetMarsRoverPhotosAsync(
+            [FromQuery] string rover,
+            string date,
             string camera)
         {
-            var httpClient = _httpClientFactory.CreateClient();
-            httpClient.BaseAddress = 
-                new Uri(_configuration.GetSection("MarsRoverPhotos:BaseUrl").Value);
-
             if (!DateTime.TryParse(date, out DateTime parsedDate) ||
                 string.IsNullOrEmpty(rover))
             {
                 return "Wrong values passed";
             }
 
-            var url = $"{rover}/photos?earth_date={date}&" +
-                $"api_key={_configuration.GetSection("MarsRoverPhotos:ApiKey").Value}";
+            var parsedCamera = string.IsNullOrWhiteSpace(camera) ?
+                 (MarsRoverCamera?)null :
+                 Enum.Parse<MarsRoverCamera>(camera, true);
 
-            if (!string.IsNullOrEmpty(camera))
-            {
-                url += $"&camera={camera}";
-            }
-
-            var response = await httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
+            return JsonConvert.SerializeObject(
+                await _marsRoverPhotosSvc.GetMarsRoverPhotosAsync(
+                    Enum.Parse<MarsRover>(rover, true),
+                    parsedDate,
+                    parsedCamera));
         }
     }
 }

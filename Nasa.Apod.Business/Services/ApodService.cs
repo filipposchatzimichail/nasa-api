@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.Extensions.Configuration;
 using Nasa.Apod.Business.Interfaces;
 using Nasa.Apod.DataAccess;
 using System;
@@ -11,27 +11,28 @@ namespace Nasa.Apod.Business.Services
     public class ApodService : IApodService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
-        public ApodService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
+        public ApodService(
+            IHttpClientFactory httpClientFactory, 
+            IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
-            _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
 
         public async Task<ApodData> GetApodAsync()
         {
             var httpClient = _httpClientFactory.CreateClient();
-            
-            var request = _httpContextAccessor.HttpContext.Request;
-            var url = $"{request.Scheme}://{request.Host}/api/apod";
+            httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
 
-            var response = await httpClient.GetAsync(url);
+            var response = await httpClient
+                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}");
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
+            var photo = await response.Content.ReadAsStringAsync();
 
-            var result = Utilities.GetApodFromJson(json);
+            var result = Utilities.GetApodFromJson(photo);
 
             return result;
         }
@@ -39,22 +40,17 @@ namespace Nasa.Apod.Business.Services
         public async Task<ApodData> GetApodByDateAsync(string date)
         {
             var httpClient = _httpClientFactory.CreateClient();
+            httpClient.BaseAddress = new Uri(_configuration.GetSection("Apod:BaseUrl").Value);
 
-            var request = _httpContextAccessor.HttpContext.Request;
-            var url = $"{request.Scheme}://{request.Host}/api/apod/date/{date}";
-
-            var response = await httpClient.GetAsync(url);
+            var response = await httpClient
+                .GetAsync($"?api_key={_configuration.GetSection("Apod:ApiKey").Value}&date={date}");
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
+            var photo = await response.Content.ReadAsStringAsync();
 
-            var result = Utilities.GetApodFromJson(json);
+            var result = Utilities.GetApodFromJson(photo);
 
             return result;
         }
     }
 }
-
-
-
-
