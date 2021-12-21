@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Nasa.Apod.Business.Interfaces;
 using Nasa.Apod.Business.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Nasa.Apod.App
 {
@@ -28,6 +24,12 @@ namespace Nasa.Apod.App
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddHttpClient();
             services.AddHttpContextAccessor();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NASA API", Version = "v1" });
+            });
+
+            services.AddControllers();
             services.AddSingleton<IApodService, ApodService>();            
             services.AddSingleton<IMarsRoverPhotosService, MarsRoverPhotosService>();            
         }
@@ -57,6 +59,13 @@ namespace Nasa.Apod.App
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSwagger();
+            
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NASA API");
             });
         }
     }
