@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Nasa.Apod.Business.Interfaces;
 using Nasa.Apod.DataAccess;
 using Nasa.Apod.DataAccess.Data;
@@ -14,16 +13,13 @@ namespace Nasa.Apod.Business.Services
     public class MarsRoverPhotosService : IMarsRoverPhotosService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
 
         public MarsRoverPhotosService(
-            IHttpClientFactory httpClientFactory, 
-            IHttpContextAccessor httpContextAccessor,
+            IHttpClientFactory httpClientFactory,
             IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
-            _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
         }
 
