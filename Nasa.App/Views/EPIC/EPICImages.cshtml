@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Nasa.DataAccess.Data.Epic.EPICImage>;
+@{
+    ViewData["Title"] = "NASA EPIC Images";
+}
+
+<div class="container">
+    <div class="card mb-5">
+        <div class="card-header">EPIC Images API <i id="epicInfo" class="fa fa-info-circle fa-pull-right"  data-toggle="popover"></i></div>
+        @*<div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col">
+                        @Html.Editor("EarthDate", new { htmlAttributes = new { @class="form-control", placeholder = "Earth Date", autocomplete="off" } })
+                        @Html.ValidationMessage("EarthDate", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>*@
+    </div>
+    
+    @if (Model != null)
+    {
+        @if (Model.Count() > 0)
+        {
+            @foreach (var photo in Model)
+            {
+                <div class="card mt-5">
+                    <img src="data:image/jpeg;base64,@photo.ImageData" alt="" title="@photo.Caption" class="card-img-top">
+                    <div class="card-body">
+                        <h4 class="card-title">Info for Image: @photo.Name</h4>
+                        <p class="card-text">Taken At: @photo.Date.ToString("dd-MM-yyyy HH:mm:ss")</p>
+                        <h4 class="card-text">Coordinations</h4>
+                        <p class="card-text">DSCOVR Position: <i>X axis:</i> @photo.Coords.DscovrJ2000Position.X - <i>Y axis:</i> @photo.Coords.DscovrJ2000Position.Y - <i>Z axis:</i> @photo.Coords.DscovrJ2000Position.Z</p>
+                        <p class="card-text">Sun Position: <i>X axis:</i> @photo.Coords.SunJ2000Position.X - <i>Y axis:</i> @photo.Coords.SunJ2000Position.Y - <i>Z axis:</i> @photo.Coords.SunJ2000Position.Z</p>
+                        <p class="card-text">Lunar Position: <i>X axis:</i> @photo.Coords.LunarJ2000Position.X - <i>Y axis:</i> @photo.Coords.LunarJ2000Position.Y - <i>Z axis:</i> @photo.Coords.LunarJ2000Position.Z</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-primary" role="alert">
+                <p>No results!!</p>
+            </div>
+        }
+    }
+</div>
+
+@section scripts {
+    <script src="~/js/epicImage.js"></script>
+}
