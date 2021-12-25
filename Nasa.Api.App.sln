@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nasa.Apod.App", "Nasa.Apod.App\Nasa.Apod.App.csproj", "{47FC9EB5-F895-4BAB-8F13-113D6D18A35B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nasa.App", "Nasa.Apod.App\Nasa.App.csproj", "{47FC9EB5-F895-4BAB-8F13-113D6D18A35B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nasa.Apod.Business", "Nasa.Apod.Business\Nasa.Apod.Business.csproj", "{BEA128F5-9BF7-40FF-B85D-E8E3CEAB09B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nasa.Business", "Nasa.Apod.Business\Nasa.Business.csproj", "{BEA128F5-9BF7-40FF-B85D-E8E3CEAB09B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nasa.Apod.DataAccess", "Nasa.Apod.DataAccess\Nasa.Apod.DataAccess.csproj", "{FA3F6947-C33B-4138-A976-C367E5B33378}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nasa.DataAccess", "Nasa.Apod.DataAccess\Nasa.DataAccess.csproj", "{FA3F6947-C33B-4138-A976-C367E5B33378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nasa.Apod.Api", "Nasa.Apod.Api\Nasa.Apod.Api.csproj", "{DC2A15E2-B77F-4634-AA73-C77DBEF900EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nasa.Api", "Nasa.Apod.Api\Nasa.Api.csproj", "{DC2A15E2-B77F-4634-AA73-C77DBEF900EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

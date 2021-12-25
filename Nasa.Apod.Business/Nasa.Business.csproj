@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nasa.Apod.DataAccess\Nasa.Apod.DataAccess.csproj" />
+    <ProjectReference Include="..\Nasa.Apod.DataAccess\Nasa.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
