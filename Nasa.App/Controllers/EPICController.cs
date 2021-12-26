@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace Nasa.App.Controllers
 {
-    public class EPICController : Controller
+    public class EpicController : Controller
     {
-        private readonly IEPICService _epicSvc;
+        private readonly IEpicService _epicSvc;
 
-        public EPICController(
-            IEPICService epicSvc)
+        public EpicController(
+            IEpicService epicSvc)
         {
             _epicSvc = epicSvc;
         }
@@ -17,7 +17,7 @@ namespace Nasa.App.Controllers
         [HttpGet]
         public async Task<IActionResult> EPICImages()
         {
-            var epicImages = await _epicSvc.GetEPICImagesAsync();
+            var epicImages = await _epicSvc.GetEpicImagesAsync();
 
             return View(epicImages);
         }

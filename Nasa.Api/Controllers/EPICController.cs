@@ -9,9 +9,9 @@ namespace Nasa.Api.Controllers
     [Route("api/epic")]
     public class EPICController : ControllerBase
     {
-        private readonly IEPICService _epicSvc;
+        private readonly IEpicService _epicSvc;
 
-        public EPICController(IEPICService apodSvc)
+        public EPICController(IEpicService apodSvc)
         {
             _epicSvc = apodSvc;
         }
@@ -20,7 +20,7 @@ namespace Nasa.Api.Controllers
         public async Task<string> GetEPICImagesAsync()
         {
             return JsonConvert.SerializeObject(
-                await _epicSvc.GetEPICImagesAsync());
+                await _epicSvc.GetEpicImagesAsync());
         }
     }
 }
