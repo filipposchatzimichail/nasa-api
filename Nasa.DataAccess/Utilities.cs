@@ -23,9 +23,9 @@ namespace Nasa.DataAccess
             return marsRoverPhotos;
         }
 
-        public static List<EPICImage> GetEpicImagesFromJson(string json)
+        public static List<EpicImage> GetEpicImagesFromJson(string json)
         {
-            var epicImages = JsonConvert.DeserializeObject<List<EPICImage>>(json);
+            var epicImages = JsonConvert.DeserializeObject<List<EpicImage>>(json);
 
             return epicImages;
         }

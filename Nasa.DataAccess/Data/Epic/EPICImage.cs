@@ -3,7 +3,7 @@ using System;
 
 namespace Nasa.DataAccess.Data.Epic
 {
-    public class EPICImage
+    public class EpicImage
     {
         [JsonProperty("identifier")]
         public long Id { get; set; }

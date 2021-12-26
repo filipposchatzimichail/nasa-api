@@ -32,7 +32,7 @@ namespace Nasa.App
             services.AddControllers();
             services.AddSingleton<IApodService, ApodService>();            
             services.AddSingleton<IMarsRoverPhotosService, MarsRoverPhotosService>();
-            services.AddSingleton<IEPICService, EPICService>();
+            services.AddSingleton<IEpicService, EpicService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

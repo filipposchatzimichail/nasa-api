@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace Nasa.Business.Interfaces
 {
-    public interface IEPICService
+    public interface IEpicService
     {
-        Task<List<EPICImage>> GetEPICImagesAsync();
+        Task<List<EpicImage>> GetEpicImagesAsync();
     }
 }

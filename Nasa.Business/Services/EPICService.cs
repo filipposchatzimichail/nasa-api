@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Nasa.Business.Services
 {
-    public class EPICService : IEPICService
+    public class EpicService : IEpicService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
 
-        public EPICService(
+        public EpicService(
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration)
         {
@@ -22,7 +22,7 @@ namespace Nasa.Business.Services
             _configuration = configuration;
         }
 
-        public async Task<List<EPICImage>> GetEPICImagesAsync()
+        public async Task<List<EpicImage>> GetEpicImagesAsync()
         {
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress =
@@ -46,7 +46,7 @@ namespace Nasa.Business.Services
             return epicPhotos;
         }
 
-        private async Task<string> GetEPICImageData(EPICImage epicImage)
+        private async Task<string> GetEPICImageData(EpicImage epicImage)
         {
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress =
