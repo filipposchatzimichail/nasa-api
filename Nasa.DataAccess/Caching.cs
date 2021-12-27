@@ -31,22 +31,43 @@ namespace Nasa.DataAccess
             return result;
         }
 
-        public static T GetObjectFromCache<T>(string container, string folder, int cacheTimeInMinutes, Func<string, string, T> objectSettingFunction)
+        public static T GetObjectFromCache<T>(string index, int cacheTimeInMinutes, string param1, Func<string, T> objectSettingFunction)
         {
             var cache = MemoryCache.Default;
-            var key = $"{container}/{folder}";
+            var key = index;
 
-            var result = (T)cache[key];
+            var result = (T)cache[index];
             if (result == null)
             {
                 var policy = new CacheItemPolicy();
                 policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cacheTimeInMinutes);
 
-                result = objectSettingFunction(container, folder);
+                result = objectSettingFunction(param1);
 
-                cache.Set(key, result, policy);
+                cache.Set(index, result, policy);
             }
             return result;
         }
+
+
+
+
+        //public static T GetObjectFromCache<T>(string container, string folder, int cacheTimeInMinutes, Func<string, string, T> objectSettingFunction)
+        //{
+        //    var cache = MemoryCache.Default;
+        //    var key = $"{container}/{folder}";
+
+        //    var result = (T)cache[key];
+        //    if (result == null)
+        //    {
+        //        var policy = new CacheItemPolicy();
+        //        policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cacheTimeInMinutes);
+
+        //        result = objectSettingFunction(container, folder);
+
+        //        cache.Set(key, result, policy);
+        //    }
+        //    return result;
+        //}
     }
 }

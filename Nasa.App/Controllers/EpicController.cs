@@ -8,8 +8,7 @@ namespace Nasa.App.Controllers
     {
         private readonly IEpicService _epicSvc;
 
-        public EpicController(
-            IEpicService epicSvc)
+        public EpicController(IEpicService epicSvc)
         {
             _epicSvc = epicSvc;
         }

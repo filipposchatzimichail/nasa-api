@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nasa.App.Models;
 using Nasa.Business.Interfaces;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Nasa.App.Controllers
 {
-    public class HomeController : Controller
+    public class ApodController : Controller
     {
         private readonly IApodService _apodService;
-        public HomeController(IApodService apodService)
+        public ApodController(IApodService apodService)
         {
             _apodService = apodService;
         }
@@ -21,18 +23,15 @@ namespace Nasa.App.Controllers
             return View(result);
         }
 
+        [HttpGet]
+        [Route("date/{date}")]
         public async Task<IActionResult> GetApodByDate(string date)
         {
             var result = await _apodService.GetApodByDateAsync(date);
 
             return View("Index", result);
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
+         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
