@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Nasa.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/apod")]
     public class ApodController : ControllerBase
     {
         private readonly IApodService _apodSvc;
