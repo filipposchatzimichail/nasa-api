@@ -28,6 +28,7 @@ namespace Nasa.DataAccess
 
                 cache.Set(index, result, policy);
             }
+
             return result;
         }
 
@@ -46,6 +47,7 @@ namespace Nasa.DataAccess
 
                 cache.Set(index, result, policy);
             }
+
             return result;
         }
 

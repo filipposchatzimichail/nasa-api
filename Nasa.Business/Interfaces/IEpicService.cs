@@ -6,6 +6,6 @@ namespace Nasa.Business.Interfaces
 {
     public interface IEpicService
     {
-        Task<List<EpicImage>> GetEpicImagesAsync();
+        Task<List<EpicImage>> GetEpicImagesAsync(string date);
     }
 }

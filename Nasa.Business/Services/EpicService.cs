@@ -22,13 +22,25 @@ namespace Nasa.Business.Services
             _configuration = configuration;
         }
 
-        public async Task<List<EpicImage>> GetEpicImagesAsync()
+        public async Task<List<EpicImage>> GetEpicImagesAsync(string date)
+        {
+            var result = await Caching.GetObjectFromCache(
+                $"epic-{date:yyyy-MM-dd}",
+                100,
+                date,
+                GetEpicImagesFromNasaAsync);
+
+            return result;
+        }
+
+        private async Task<List<EpicImage>> GetEpicImagesFromNasaAsync(
+            string date)
         {
             var httpClient = _httpClientFactory.CreateClient();
             httpClient.BaseAddress =
                 new Uri(_configuration.GetSection("EPIC:BaseUrl").Value);
 
-            var url = $"natural/date/2019-05-30?" +
+            var url = $"natural/date/{date}?" +
                 $"api_key={_configuration.GetSection("EPIC:ApiKey").Value}";
 
             var response = await httpClient.GetAsync(url);

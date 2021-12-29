@@ -27,7 +27,8 @@ namespace Nasa.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MarsRoverPhotos(MarsRoverPhotoDto marsRoverPhotoDto)
+        public async Task<IActionResult> MarsRoverPhotos(
+            MarsRoverPhotoDto marsRoverPhotoDto)
         {
             PopulateDropdownSelectItems();
 

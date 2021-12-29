@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nasa.App.DTOs;
 using Nasa.Business.Interfaces;
 using System.Threading.Tasks;
 
@@ -14,9 +15,22 @@ namespace Nasa.App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EPICImages()
+        public IActionResult EPICImages()
         {
-            var epicImages = await _epicSvc.GetEpicImagesAsync();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EPICImages(EpicImageDto epicImageDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var epicImages = await _epicSvc
+                .GetEpicImagesAsync(
+                    epicImageDto.EpicDate?.ToString("yyyy-MM-dd"));
 
             return View(epicImages);
         }
