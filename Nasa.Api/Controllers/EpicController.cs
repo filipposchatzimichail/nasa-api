@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nasa.Business.Interfaces;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -18,16 +17,9 @@ namespace Nasa.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetEPICImagesAsync([FromQuery] string date)
+        public async Task<string> GetEPICImagesAsync([FromQuery] DateTime? date)
         {
-            if (!DateTime.TryParse(date, out DateTime parsedDate))
-            {
-                return "Wrong value passed";
-            }
-
-            return JsonConvert.SerializeObject(
-                await _epicSvc.GetEpicImagesAsync(
-                    parsedDate.ToString("yyyy-MM-dd")));
+            return await _epicSvc.GetEpicImagesAsJsonStringAsync(date);
         }
     }
 }

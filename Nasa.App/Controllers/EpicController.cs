@@ -29,8 +29,7 @@ namespace Nasa.App.Controllers
             }
 
             var epicImages = await _epicSvc
-                .GetEpicImagesAsync(
-                    epicImageDto.EpicDate?.ToString("yyyy-MM-dd"));
+                .GetEpicImagesAsync(epicImageDto.EpicDate);
 
             return View(epicImages);
         }
