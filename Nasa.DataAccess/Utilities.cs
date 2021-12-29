@@ -1,6 +1,6 @@
-﻿using Nasa.DataAccess.Data.Epic;
+﻿using Nasa.DataAccess.Data.Apod;
+using Nasa.DataAccess.Data.Epic;
 using Nasa.DataAccess.Data.MarsRover;
-using Nasa.DataAccess.Data.Apod;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -14,18 +14,21 @@ namespace Nasa.DataAccess
             return JsonConvert.DeserializeObject<ApodImage>(json);
         }
 
-        public static List<MarsRoverPhoto> GetMarsRoverPhotoFromJson(string json)
+        public static List<MarsRoverPhoto> GetMarsRoverPhotoFromJson(
+            string json)
         {
             var photos = JObject.Parse(json).SelectToken("photos").ToString();
 
-            var marsRoverPhotos = JsonConvert.DeserializeObject<List<MarsRoverPhoto>>(photos);
+            var marsRoverPhotos = JsonConvert
+                .DeserializeObject<List<MarsRoverPhoto>>(photos);
 
             return marsRoverPhotos;
         }
 
         public static List<EpicImage> GetEpicImagesFromJson(string json)
         {
-            var epicImages = JsonConvert.DeserializeObject<List<EpicImage>>(json);
+            var epicImages = JsonConvert
+                .DeserializeObject<List<EpicImage>>(json);
 
             return epicImages;
         }

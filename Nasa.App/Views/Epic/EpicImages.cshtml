@@ -5,25 +5,25 @@
 
 <div class="container">
     <div class="card mb-5">
-        <div class="card-header">EPIC Images API <i id="epicInfo" class="fa fa-info-circle fa-pull-right"  data-toggle="popover"></i></div>
-        @*<div class="card-body">
+        <div class="card-header">EPIC Images API <i id="epicInfo" class="fa fa-info-circle fa-pull-right" data-toggle="popover"></i></div>
+        <div class="card-body">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col">
-                        @Html.Editor("EarthDate", new { htmlAttributes = new { @class="form-control", placeholder = "Earth Date", autocomplete="off" } })
-                        @Html.ValidationMessage("EarthDate", new { @class = "text-danger" })
+                        @Html.Editor("EpicDate", new { htmlAttributes = new { @class="form-control", placeholder = "EPIC Date", autocomplete="off" } })
+                        @Html.ValidationMessage("EpicDate", new { @class = "text-danger" })
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             }
-        </div>*@
+        </div>
     </div>
-    
-    @if (Model != null)
+
+    @if (Model is not null)
     {
         @if (Model.Count() > 0)
         {
@@ -52,5 +52,5 @@
 </div>
 
 @section scripts {
-    <script src="~/js/epicImage.js"></script>
+<script src="~/js/epicImage.js"></script>
 }
