@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Nasa.App.Controllers
 {
+    [Route("")]
+    [Route("apod")]
     public class ApodController : Controller
     {
         private readonly IApodService _apodService;
@@ -16,6 +18,8 @@ namespace Nasa.App.Controllers
             _apodService = apodService;
         }
 
+        [HttpGet]
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             var result = await _apodService.GetApodAsync();
