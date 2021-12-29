@@ -29,7 +29,12 @@ namespace Nasa.Business.Services
 
         public async Task<List<EpicImage>> GetEpicImagesAsync(DateTime? date)
         {
-            var cacheKey = $"epic-{date:yyyy-MM-dd}";
+            var cacheKey = $"epic-null-date";
+
+            if (date is not null)
+            {
+                cacheKey = $"epic-{date:yyyy-MM-dd}";
+            }
 
             var result = _memoryCache.Get<List<EpicImage>>(cacheKey);
 
@@ -38,6 +43,13 @@ namespace Nasa.Business.Services
                 result = await GetImagesFromNasa(date);
 
                 _memoryCache.Set(cacheKey, result, TimeSpan.FromHours(12));
+
+                var resultToJsonString = JsonConvert.SerializeObject(result);
+
+                _memoryCache.Set(
+                    cacheKey + "-json-string",
+                    resultToJsonString,
+                    TimeSpan.FromHours(12));
             }
 
             return result;
@@ -46,11 +58,11 @@ namespace Nasa.Business.Services
         public async Task<string> GetEpicImagesAsJsonStringAsync(
             DateTime? date)
         {
-            var cacheKey = $"epic-string-null-date";
+            var cacheKey = $"epic-null-date-json-string";
 
             if (date is not null)
             {
-                cacheKey = $"epic-string-{date:yyyy-MM-dd}";
+                cacheKey = $"epic-{date:yyyy-MM-dd}-json-string";
             }
 
             var result = _memoryCache.Get<string>(cacheKey);
@@ -58,6 +70,11 @@ namespace Nasa.Business.Services
             if (result is null)
             {
                 var epicPhotos = await GetImagesFromNasa(date);
+
+                _memoryCache.Set(
+                    cacheKey.Replace("-json-string", ""),
+                    epicPhotos,
+                    TimeSpan.FromHours(12));
 
                 result = JsonConvert.SerializeObject(epicPhotos);
 
